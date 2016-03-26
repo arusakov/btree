@@ -1,0 +1,17 @@
+{
+  "name": "btree",
+  "version": "0.0.1",
+  "description": "Inmemory JavaScript B-Tree data struct",
+  "main": "src/btree.js",
+  "scripts": {
+    "test": "mocha src/*.spec.js"
+  },
+  "keywords": [
+    "btree"
+  ],
+  "author": "Alexander Rusakov <a_s_rusakov@mail.ru> (https://github.com/arusakov)",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  }
+}
