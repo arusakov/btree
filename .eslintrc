@@ -1,0 +1,14 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "rules": {
+    "block-scoped-var": 2,
+    "consistent-return": 2,
+    "curly": 2,
+    "eqeqeq": 2,
+    "no-else-return": 2,
+    "radix": 2,
+    "semi": 2
+  }
+}

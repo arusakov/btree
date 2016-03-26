@@ -4,7 +4,10 @@
   "description": "Inmemory JavaScript B-Tree data struct",
   "main": "src/btree.js",
   "scripts": {
-    "test": "mocha src/*.spec.js"
+    "dev": "mocha --watch src/*.spec.js",
+    "lint": "eslint ./src",
+    "test": "npm run lint && npm run unit",
+    "unit": "mocha src/*.spec.js"
   },
   "keywords": [
     "btree"
@@ -12,6 +15,8 @@
   "author": "Alexander Rusakov <a_s_rusakov@mail.ru> (https://github.com/arusakov)",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^2.4.5"
+    "eslint": "2.5.1",
+    "mocha": "2.4.5",
+    "should": "8.3.0"
   }
 }
