@@ -1,43 +1,59 @@
+/* global require, describe, it */
+
 require('should');
 
 var btree = require('./btree');
 
 var BTree = btree.BTree;
 var createNode = btree.createNode;
-var simpleInsert = btree.simpleInsert;
-
-describe('BTree.insert()', () => {
-
-});
+var insertToArr = btree.insertToArr;
+var sliceNode = btree.sliceNode;
 
 describe('Helpers funcs', () => {
 
   it('createNode()', () => {
-    createNode().should.deepEqual({
-      childs: [],
-      values: []
+    createNode([1], [2]).should.deepEqual({
+      childs: [2],
+      values: [1]
     });
   });
 
-  it('simpleInsert()', () => {
-    var node = createNode();
+  it('insertToArr()', () => {
+    var arr = [];
 
-    simpleInsert(node, 3, 0);
-    node.should.deepEqual({
-      childs: [createNode()],
-      values: [3]
+    insertToArr(arr, 3, 0);
+    arr.should.deepEqual([3]);
+
+    insertToArr(arr, 1, 0);
+    arr.should.deepEqual([1, 3]);
+
+    insertToArr(arr, 2, 1);
+    arr.should.deepEqual([1, 2, 3]);
+  });
+
+  it('sliceNode() odd', () => {
+    var node = createNode(
+      [10, 20, 30],
+      [5, 15, 25, 35]
+    );
+
+    sliceNode(node).should.deepEqual({
+      lNode: createNode([10], [5, 15]),
+      middle: 20,
+      rNode: createNode([30], [25, 35])
     });
+  });
 
-    simpleInsert(node, 1, 0);
-    node.should.deepEqual({
-      childs: [createNode(), createNode()],
-      values: [1, 3]
-    });
+  it('sliceNode() even', () => {
+    var node = createNode(
+      [10, 20, 30, 40],
+      [5, 15, 25, 35, 45]
+    );
 
-    simpleInsert(node, 2, 1);
-    node.should.deepEqual({
-      childs: [createNode(), createNode(), createNode()],
-      values: [1, 2, 3]
+    sliceNode(node).should.deepEqual({
+      lNode: createNode([10, 20], [5, 15, 25]),
+      middle: 30,
+      rNode: createNode([40], [35, 45])
     });
   });
 
