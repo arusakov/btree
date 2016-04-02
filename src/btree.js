@@ -1,7 +1,7 @@
 /* global exports */
 
 /**
- * Classic comporator function
+ * Classic comparator function
  * @callback Comparator
  * @param {*} left
  * @param {*} right
@@ -49,10 +49,12 @@ BTree.prototype = {
    */
   insert: function insert(element) {
     var parts = this.insertRec(this.root, element);
-    if (!parts) {
-      return this;
+    if (parts) {
+      this.root = createNode(
+        [parts.middle],
+        [parts.lNode, parts.rNode]
+      );
     }
-
     return this;
   },
   /**
@@ -76,10 +78,10 @@ BTree.prototype = {
       if (!parts) {
         return parts; // null
       }
-      node.values.splice(i, 0, parts.middle);
+      insertToArr(values, parts.middle, i);
       node.childs.splice(i, 1, parts.lNode, parts.rNode);
     } else {
-      insertToArr(node.values, element, i);
+      insertToArr(values, element, i);
     }
     return this.checkNode(node);
   },
@@ -148,9 +150,11 @@ function toArrayRec(node, arr) {
     arr.push.apply(arr, node.values);
     return;
   }
-  for (var i = 1; i < childs.length; ++i) {
-    toArrayRec(childs[i], arr);
-    arr.push(node.values[i - 1]);
+  toArrayRec(childs[0], arr);
+  var values = node.values;
+  for (var i = 0; i < values.length; ++i) {
+    arr.push(values[i]);
+    toArrayRec(childs[i + 1], arr);
   }
 }
 

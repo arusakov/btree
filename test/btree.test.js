@@ -11,7 +11,7 @@ var sliceNode = btree.sliceNode;
 
 describe('BTree', () => {
 
-  it('toArray()', () => {
+  it('toArray() empty', () => {
     new BTree().toArray().should.deepEqual([]);
   });
 
@@ -44,6 +44,25 @@ describe('BTree', () => {
 
     bt.toArray().should.be.eql([
       -50, -1, 1, 2, 3, 50, 100
+    ]);
+  });
+
+  it('insert()', () => {
+    var bt = new BTree({
+      degree: 3,
+      comparator: (a, b) => a - b
+    });
+
+    bt.insert(1);
+    bt.insert(2);
+    bt.insert(3);
+    bt.insert(4);
+    bt.insert(5);
+    bt.insert(6);
+    bt.insert(7);
+
+    bt.toArray().should.be.eql([
+      1, 2, 3, 4, 5, 6, 7
     ]);
   });
 
