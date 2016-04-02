@@ -4,10 +4,11 @@
   "description": "Inmemory JavaScript B-Tree data struct",
   "main": "src/btree.js",
   "scripts": {
-    "dev": "mocha --watch src/*.spec.js",
-    "lint": "eslint ./src",
+    "coverage": "istanbul cover _mocha",
+    "dev": "mocha --watch",
+    "lint": "eslint ./src ./test",
     "test": "npm run lint && npm run unit",
-    "unit": "mocha src/*.spec.js"
+    "unit": "mocha"
   },
   "keywords": [
     "btree"
@@ -16,6 +17,7 @@
   "license": "MIT",
   "devDependencies": {
     "eslint": "2.5.1",
+    "istanbul": "0.4.2",
     "mocha": "2.4.5",
     "should": "8.3.0"
   }

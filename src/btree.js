@@ -2,17 +2,17 @@
 
 /**
  * Classic comporator function
- * @callback Comporator
+ * @callback Comparator
  * @param {*} left
  * @param {*} right
- * @return {number} - <0, 0 or >0
+ * @returns {number} - <0, 0 or >0
  */
 
 /**
  * Options object for BTree object
  * @typedef {Object} BTreeOptions
  * @property {number} degree
- * @property {Comporator} comparator
+ * @property {Comparator} comparator
  */
 
 /**
@@ -24,74 +24,72 @@
 
 /**
  * @class
- * @param {BTreeOptions} options
+ * @param {BTreeOptions} options - options
  */
 function BTree(options) {
   this.options = options;
-  this.root = createNode();
+  this.root = createNode([], null);
 }
 
 BTree.prototype = {
   /**
    * Delete element from BTree
-   * @param {*} element or element like object
+   * @param {*} elementLike - element or element like object
+   * @returns {boolean}
    */
   delete: function _delete(elementLike) {
-
+    // todo
+    console.log(elementLike);
+    return false;
   },
   /**
    * Insert element to BTree
-   * @param {*} element
+   * @param {*} element - element
+   * @returns {BTree}
    */
   insert: function insert(element) {
+    var parts = this.insertRec(this.root, element);
+    if (!parts) {
+      return this;
+    }
 
+    return this;
   },
   /**
    * @private
-   * @param {BTreeNode} node
-   * @param {*} node
-   * @return {boolean}
+   * @param {BTreeNode} node parent node
+   * @param {*} element
+   * @returns {boolean}
    */
   insertRec: function insertRec(node, element) {
-    var childs = node.childs;
     var values = node.values;
-    var completed = values.length + 1 === this.options.degree;
-
-    if (!childs && completed) {
-      return false;
-    }
-
-    var comp = this.options.comparator;
-    var vi = 0;
-    for (; vi < values.length; ++vi) {
-      if (comp(values) < 0) {
-        if (childs) {
-          if (!this.insertRec(childs[vi], element)) {
-            if (completed) {
-              return false;
-            }
-            var parts = sliceNode(childs[vi]);
-            // todo
-
-            return true;
-          }
-        }
-        insertToArr(values, element, vi);
-        return true;
+    var comparator = this.options.comparator;
+    var i = 0;
+    while (i < values.length) {
+      if (comparator(element, values[i]) < 0) {
+        break;
       }
+      i += 1;
     }
-    if (childs) {
-      if (!this.insertRec(childs[vi], element)) {
-        if (completed) {
-          return false;
-        }
-
-        return true;
+    if (node.childs) {
+      var parts = this.insertRec(node.childs[i], element);
+      if (!parts) {
+        return parts; // null
       }
+      node.values.splice(i, 0, parts.middle);
+      node.childs.splice(i, 1, parts.lNode, parts.rNode);
+    } else {
+      insertToArr(node.values, element, i);
     }
-    insertToArr(values, element, vi);
-    return true;
+    return this.checkNode(node);
   },
+  checkNode: function checkNode(node) {
+    return node.values.length === this.options.degree ? sliceNode(node) : null;
+  },
+  /**
+   * @private
+   * @returns {Array<*>}
+   */
   toArray: function toArray() {
     var arr = [];
     toArrayRec(this.root, arr);
@@ -103,7 +101,9 @@ BTree.prototype = {
 };
 
 /**
- * @return {BTreeNode}
+ * @param {Array<*>} values
+ * @param {BTreeNode[]} childs
+ * @returns {BTreeNode}
  */
 function createNode(values, childs) {
   return {
@@ -144,7 +144,7 @@ function sliceNode(node) {
 
 function toArrayRec(node, arr) {
   var childs = node.childs;
-  if (!childs.length) {
+  if (!childs) {
     arr.push.apply(arr, node.values);
     return;
   }
