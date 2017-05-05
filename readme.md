@@ -1,5 +1,7 @@
 BTree
 =====
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/arusakov/btree.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/arusakov/btree.svg?branch=master)](https://travis-ci.org/arusakov/btree)
 
 In-memory BTree data struct

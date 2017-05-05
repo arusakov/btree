@@ -16,9 +16,9 @@
   "author": "Alexander Rusakov <a_s_rusakov@mail.ru> (https://github.com/arusakov)",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "2.5.1",
-    "istanbul": "0.4.2",
-    "mocha": "2.4.5",
-    "should": "8.3.0"
+    "eslint": "3.19.0",
+    "istanbul": "0.4.5",
+    "mocha": "3.3.0",
+    "should": "11.2.1"
   }
 }
